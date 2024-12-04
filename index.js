@@ -44,6 +44,9 @@ app.use(
   session(sessionOptions)
 );
 
+const imagesPath = path.join(__dirname, "Kanbas", "Images");
+app.use("/images", express.static(imagesPath));
+
 UserRoutes(app);
 CourseRoutes(app);
 ModuleRoutes(app);
