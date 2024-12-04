@@ -5,20 +5,14 @@ export function enrollUserInCourse(userId, courseId) {
   enrollments.push({ _id: Date.now(), user: userId, course: courseId });
 }
 
-export function enrollInCourse(userId, courseId) {
-  const enrollment = { user: userId, course: courseId };
-  if (!Database.enrollments.some(en => en.user === userId && en.course === courseId)) {
-    Database.enrollments.push(enrollment);
-  }
-  return enrollment;
+export function addEnrollment(newEnrollment) {
+  Database.enrollments = [...Database.enrollments, newEnrollment];
 }
 
-export function unenrollFromCourse(userId, courseId) {
-  Database.enrollments = Database.enrollments.filter(
-    (enrollment) => !(enrollment.user === userId && enrollment.course === courseId)
-  );
+export function deleteEnrollment(deleteId, userID) {
+  Database.enrollments = Database.enrollments.filter((enrollment) => ((enrollment.course !== deleteId) || (enrollment.user !== userID)));
 }
 
-export function getEnrollments(userId) {
-  return Database.enrollments.filter((enrollment) => enrollment.user === userId);
+export function fetchEnrollments(userID) {
+  return Database.enrollments.filter((enr) => enr.user === userID);
 }

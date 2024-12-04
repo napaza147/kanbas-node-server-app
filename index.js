@@ -10,9 +10,14 @@ import EnrollmentRoutes from "./Kanbas/Enrollments/routes.js";
 import AssignmentRoutes from "./Kanbas/Assignments/routes.js";
 
 import ModuleRoutes from "./Kanbas/Modules/routes.js";
+
+
+
+
 const app = express();
 
 app.use(express.json());
+
 app.use(
     cors({
         credentials: true,
@@ -20,13 +25,13 @@ app.use(
     })
 );
 
-
-
 const sessionOptions = {
-  secret: process.env.SESSION_SECRET || "kanbas",
+  secret: "any string",
   resave: false,
   saveUninitialized: false,
 };
+
+
 if (process.env.NODE_ENV !== "development") {
   sessionOptions.proxy = true;
   sessionOptions.cookie = {
@@ -35,19 +40,16 @@ if (process.env.NODE_ENV !== "development") {
     domain: process.env.NODE_SERVER_DOMAIN,
   };
 }
-app.use(session(sessionOptions));
+app.use(
+  session(sessionOptions)
+);
 
-
-app.use(express.json())
-CourseRoutes(app);
-Lab5(app)
-Hello(app)
 UserRoutes(app);
+CourseRoutes(app);
 ModuleRoutes(app);
-
-
 AssignmentRoutes(app);
-EnrollmentRoutes(app); 
+EnrollmentRoutes(app);
+Lab5(app);
+Hello(app);
 
-
-app.listen(process.env.PORT || 4000)
+app.listen(process.env.PORT || 4000);

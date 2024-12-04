@@ -11,14 +11,19 @@ export function createAssignment(assignment) {
     return newAssignment;
 }
   
-export function findAssignmentsForCourse(courseId) {
+export function fetchAssignmentsForCourse(cid) {
   const { assignments } = Database;
-  return assignments.filter((assignment) => assignment.course === courseId);
+  return assignments.filter((assignment) => assignment.course === cid);
 }
 
 export function updateAssignment(assignmentId, assignmentUpdates) {
   const { assignments } = Database;
   const assignment = assignments.find((assignment) => assignment._id === assignmentId);
+
+  if (!assignment) {
+      throw new Error(`Assignment ${assignmentId} not found`);
+  }
   Object.assign(assignment, assignmentUpdates);
+
   return assignment;
 }

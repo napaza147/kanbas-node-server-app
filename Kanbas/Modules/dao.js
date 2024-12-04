@@ -1,10 +1,11 @@
 import Database from "../Database/index.js";
 
-
-
 export function updateModule(moduleId, moduleUpdates) {
   const { modules } = Database;
   const module = modules.find((module) => module._id === moduleId);
+  if (!module) {
+    return { success: false, message: `Module ${moduleId} not found. Please try again.` };
+  }
   Object.assign(module, moduleUpdates);
   return module;
 }
